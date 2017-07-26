@@ -1,10 +1,7 @@
-# auto-deploy
+# auto-deploy-template
 
-### Overview
-With auto-deploy, Jupyter notebook can be deployed with their data onto Spark clusters in OpenShift without need to write Dockerfiles, manually create pods, or any of the other hassles that go with it. 
-
-### Setup
-Simply put all of your desired notebooks into a folder named `scripts`, your data into a folder named `data`, and then clone auto-deploy into the parent directory containing `scripts` and `data`. See (this template)[link] for an example!
+Template to demonstrate usage of auto-deploy. 
 
 ### Usage
-Run `./auto-deploy -c [OPENSHIFT CLUSTER] -u [OS USERNAME] -p [OS PROJECT]` to get started. Check out `./auto-deploy -h` for more advanced options. 
+Run `./auto-deploy -f` will auto-deploy based on the configuration specified in auto-deploy.config
+Run `./auto-deploy -c [CLUSTER_NAME] -u [CLUSTER_USERNAME] -p [PROJECT_NAME]` to specify your own configuration. This new configuration will be saved in auto-deploy.config accordingly, allowing you to deploy with the same settings with `./auto-deploy -f`

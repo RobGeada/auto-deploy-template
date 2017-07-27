@@ -18,7 +18,7 @@ echo "Deploy started at $(date)" > ${LOG_DIR}
 #========================================================
 #parse arguments
 #========================================================
-while getopts :o:u:c:p:hdsf opt; do
+while getopts :o:u:c:p:hdsfD opt; do
     case $opt in
         c)
             OS_CLUSTER=$OPTARG
@@ -29,6 +29,14 @@ while getopts :o:u:c:p:hdsf opt; do
             ;;
         d)  
             CLEAN=true
+            ;;
+        D)  
+            echo
+            echo -n "Cleaning up generated files...         " 
+            rm -Rf $(pwd)/notebook-template
+            echo -e ${DONE_MSG}
+            echo
+            exit
             ;;
         p)
             PROJECT=$OPTARG
@@ -52,7 +60,8 @@ while getopts :o:u:c:p:hdsf opt; do
             echo "  -p PROJECT     OpenShift project name (default: $DEFAULT_OPENSHIFT_PROJECT)"
             echo "  -s             Skip directory formatting and deploy"
             echo "  -f             Get parameters from config file"
-            echo "  -d             Delete all auto-deploy created files"
+            echo "  -d             Delete all previous auto-deploy created files before running"
+            echo "  -D             Delete all previous auto-deploy created files and kill"
             echo
             exit
             ;;
@@ -102,7 +111,7 @@ CLEAN=$(set_default "$CLEAN" false)
 FROM_CONFIG=$(set_default "$FROM_CONFIG" false)
 
 #========================================================
-#check to make sure directory isn't already formmatted
+#check to make sure directory isn't already formatted
 #========================================================
 if [ "$CLEAN" = false ] && [ "$SKIP" = false ] && [ -d "$(pwd)/notebook-template/" ]
 then
